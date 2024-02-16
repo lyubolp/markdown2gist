@@ -1,0 +1,25 @@
+@startuml "Markdown2Gist"
+
+start
+:Start script;
+:Read markdown file;
+:Extract code snippets;
+
+repeat
+    :Get next code snippet;
+    :Determine language;
+    :Ask user for name;
+    :Ask user for description;
+    :Prepare request;
+    :Send request to Gist API;
+
+    if (Request OK ?) then (True)
+        :Show link to user;
+    else (False)
+        stop
+    endif
+repeat while (Code snippet available ?) is (True)
+
+stop
+
+@enduml
