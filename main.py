@@ -4,6 +4,8 @@ Main program module
 import os
 import sys
 
+from dotenv import load_dotenv
+
 from src.cli import parse_args, setup_cli
 from src.code_snippet import CodeSnippet
 from src.gist_api import GithubGistAPIError, GithubGistAPIHandler
@@ -11,6 +13,7 @@ from src.markdown_extract import extract_code_blocks, extract_code_block_languag
 from src.ui import preview_raw_code_snippet, read_user_input, show_message
 
 if __name__ == "__main__":
+    load_dotenv()
     parser = setup_cli()
     arguments = parse_args(parser)
 
@@ -48,7 +51,8 @@ if __name__ == "__main__":
         code_snippet = CodeSnippet(name, code_block, language, description)
         code_snippets.append(code_snippet)
 
-    gist_api = GithubGistAPIHandler()
+    gist_token = os.environ['GITHUB_GIST_TOKEN']
+    gist_api = GithubGistAPIHandler(gist_token)
 
     for code_snippet in code_snippets:
         try:
