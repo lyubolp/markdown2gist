@@ -17,3 +17,10 @@ def extract_code_blocks(content: list[str]) -> list[list[str]]:
     code_blocks = [content[start:end+1] for start, end in code_block_bounds]
 
     return code_blocks
+
+
+def extract_code_block_language(first_line: str) -> str:
+    """
+    Returns the language of the code block
+    """
+    return first_line.split(MARKDOWN_CODE_SNIPPET_SYNTAX)[1]
