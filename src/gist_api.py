@@ -19,7 +19,7 @@ GITHUB_GIST_HEADERS = {
 
 GITHUB_GIST_DATA_FORMAT = {
     'description': '{description}',
-    'public': False,
+    'public': True,
     'files': {}
 }
 
@@ -47,7 +47,7 @@ class GithubGistAPIHandler:
 
     def convert_to_gist(self, code_snippet: CodeSnippet) -> str:
         headers = self.__prepare_headers()
-        data = self.__prepare_data()
+        data = self.__prepare_data(code_snippet)
 
         response = requests.post(self.__url, headers=headers, json=data)
 
@@ -59,14 +59,14 @@ class GithubGistAPIHandler:
 
     def __prepare_headers(self) -> dict[str, str]:
         headers = copy(self.__headers_template)
-        headers['Authorization'] = headers['Authorization'].format(self.__token)
+        headers['Authorization'] = headers['Authorization'].format(token=self.__token)
 
         return headers
 
     def __prepare_data(self, code_snippet: CodeSnippet) -> dict[str, Any]:
         data = copy(self.__data_template)
 
-        data['description'] = data['description'].format(code_snippet.description)
+        data['description'] = data['description'].format(description=code_snippet.description)
 
         files = self.__prepare_files(code_snippet)
         data['files'] = files
@@ -74,7 +74,7 @@ class GithubGistAPIHandler:
         return data
     
     def __prepare_files(self, code_snippet: CodeSnippet) -> dict[str, Any]:
-        file_extension = self.__language_to_file_extension[code_snippet.language]
+        file_extension = self.__language_to_file_extension[code_snippet.language.strip()]
         file_name = f'{code_snippet.name}.{file_extension}'
         code = '\n'.join(code_snippet.code)
 
@@ -84,19 +84,3 @@ class GithubGistAPIHandler:
         }
 
         return result
-GITHUB_GIST_FILE_FORMAT = {
-    '{filename}': { 
-        'content': '{code}'
-    }
-}
-
-
-def prepare_data(filename: str, code: list[str], description: str = '', base: dict[str, Any] = GITHUB_GIST_HEADERS) -> dict[str, Any]:
-    data = copy(base)
-    data['description'] = data['description'].format(description)
-
-    files = copy(data['files'])
-
-    files[]
-    data['files'] = files
-    return data
