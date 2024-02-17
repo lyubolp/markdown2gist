@@ -8,7 +8,7 @@ from typing import Optional
 class CodeSnippet:
     def __init__(self, name: str, code: str, language: str, description: Optional[str] = None):
         self.__name = name
-        self.__code = code
+        self.__code = code[1:-1]  # Remove the start and end of the codeblock
         self.__language = language
         self.__description = description
 
