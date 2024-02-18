@@ -48,7 +48,7 @@ if __name__ == "__main__":
         language = extract_code_block_language(code_block[0])
         description = read_user_input('Please enter a description:')
 
-        code_snippet = CodeSnippet(name, code_block, language, description)
+        code_snippet = CodeSnippet(name, '\n'.join(code_block), language, description)
         code_snippets.append(code_snippet)
 
     gist_token = os.environ['GITHUB_GIST_TOKEN']
@@ -56,9 +56,9 @@ if __name__ == "__main__":
 
     for code_snippet in code_snippets:
         try:
-            result_url = gist_api.convert_to_gist(code_snippet)
+            result_url = gist_api.upload_to_gist(code_snippet)
         except GithubGistAPIError as exc:
-            show_message(exc)
+            show_message(str(exc))
             continue
 
         show_message(result_url)
