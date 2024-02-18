@@ -2,6 +2,7 @@
 A module mainly for future development, if I want a fancier UI
 """
 
+
 def preview_raw_code_snippet(code_snippet: list[str]):
     """
     Show raw code snippet to the user

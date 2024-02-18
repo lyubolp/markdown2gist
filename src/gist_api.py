@@ -47,13 +47,20 @@ class GithubGistAPIHandler:
     def __init__(self, token: str, url: str = GITHUB_GIST_API,
                  headers_template: Optional[dict[str, str]] = None,
                  data_template: Optional[dict] = None,
-                 language_to_file_extension: Optional[dict[str, str]] = None,
+                 lang_to_ext: Optional[dict[str, str]] = None,
                  timeout: int = 60):
         self.__token = token
         self.__url = url
-        self.__headers_template = GITHUB_GIST_HEADERS if headers_template is None else headers_template
-        self.__data_template = GITHUB_GIST_DATA_FORMAT if data_template is None else data_template
-        self.__language_to_file_extension = LANGUAGE_TO_FILE_EXTENSION if language_to_file_extension is None else language_to_file_extension
+
+        headers_template = GITHUB_GIST_HEADERS if headers_template is None else headers_template
+        self.__headers_template = headers_template
+
+        data_template = GITHUB_GIST_DATA_FORMAT if data_template is None else data_template
+        self.__data_template = data_template
+
+        lang_to_ext = LANGUAGE_TO_FILE_EXTENSION if lang_to_ext is None else lang_to_ext
+        self.__language_to_file_extension = lang_to_ext
+
         self.__timeout = timeout
 
     def upload_to_gist(self, code_snippet: CodeSnippet) -> str:

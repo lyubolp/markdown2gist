@@ -7,7 +7,7 @@ from typing import Optional
 
 class CodeSnippet:
     """
-    Class to model a snippet of code. 
+    Class to model a snippet of code.
     Contains the name of the snippet, the code, the language and optional description.
     """
     def __init__(self, name: str, code: str, language: str, description: Optional[str] = None):
